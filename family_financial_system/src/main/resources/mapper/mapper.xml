@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.family_financial_system.dao.userDao">
+    <select id="login" resultType="user">
+        select * from userinfo where username=#{username} and password=#{password}
+    </select>
+    <update id="RestPassword">
+        update userinfo set password = #{password} where username = #{UserOrMail}
+    </update>
+    <insert id="AddFamilyMember" parameterType="user">
+        insert into userinfo (id,username,password,realname,roleid,houseid,photo) values (#{id},#{username},#{password},#{realname},#{roleid},#{houseid},#{photo})
+    </insert>
+    <select id="getMemberList" resultType="user">
+        select id,username,email,realname,roleid,photo,relationid,tel from userinfo where houseid=#{houseid}
+    </select>
+    <select id="getBill" resultType="bill">
+        select * from billinfo where houseid=#{houseid}
+        <if test="userid != null">
+            and userid = #{userid}
+        </if>
+    </select>
+    <insert id="addPersonIncome" parameterType="income">
+        insert into income (id,houseid,totelIncome,bestIncome,lowerIncome,yearSpending,monthSpending,userid) values (#{id},#{houseid},#{totelIncome},#{bestIncome},#{lowerIncome},#{yearSpending},#{monthSpending},#{userid})
+    </insert>
+    <update id="setIncome">
+        update income
+        <trim prefix="set" suffixOverrides="," suffix="where userid = #{userid} and houseid = #{houseid}">
+            <if test="totelIncome != null">totelIncome=#{totelIncome},</if>
+            <if test="yearSpending != null">yearSpending=#{yearSpending},</if>
+            <if test="monthSpending != null">monthSpending=#{monthSpending},</if>
+        </trim>
+    </update>
+    <select id="getIncome" resultType="income">
+        select * from income where houseid=#{houseid} and userid=#{userid}
+    </select>
+    <select id="getIncomeList" resultType="income">
+        select * from income where houseid=#{houseid}
+    </select>
+    <insert id="addBill" parameterType="billinfo">
+        insert into bill (id,title,userid,moneytype,money,typeid,remark,paywayid,time) values (#{id},#{title},#{userid},#{moneytype},#{money},#{typeid},#{remark},#{paywayid},#{time})
+    </insert>
+    <update id="updatebill">
+        update bill
+        <trim prefix="set" suffixOverrides="," suffix="where id = #{id}">
+            <if test="title != null">title=#{title},</if>
+            <if test="money != null">money=#{money},</if>
+            <if test="typeid != null">typeid=#{typeid},</if>
+            <if test="remark != null">remark=#{remark},</if>
+            <if test="paywayid != null">paywayid=#{paywayid},</if>
+            <if test="time != null">time=#{time}, </if>
+        </trim>
+    </update>
+    <delete id="delbill">
+        delete from bill where id in
+        <foreach collection="billIndex" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="getMainUserInfo" resultType="user">
+        select id,username,email,realname,roleid,photo,relationid,tel from userinfo where id=#{id}
+    </select>
+    <select id="getType" resultType="String">
+        select name from type
+    </select>
+    <select id="getTypeList" resultType="type">
+        select id,name from type
+    </select>
+    <select id="getPayWayList" resultType="payway">
+        select id,payway,extra from payway
+    </select>
+    <insert id="messageData" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO message (
+        id,
+        message,
+        sender,
+        receiver,
+        msgtime
+        ) VALUES
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.id},
+            #{item.message},
+            #{item.sender},
+            #{item.receiver},
+            #{item.msgtime}
+            )
+        </foreach>
+    </insert>
+    <select id="getChatHistory" resultType="message">
+        select * from message where sender=#{sender} and receiver=#{receiver}
+    </select>
+    <update id="createUserChatHistory">
+        CREATE TABLE ${tableName}  (
+                                      `id` int(0) UNSIGNED NOT NULL AUTO_INCREMENT,
+                                      `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                      `sender` int(0) NOT NULL,
+                                      `receiver` int(0) NOT NULL,
+                                      PRIMARY KEY (`id`) USING BTREE
+        ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+    </update>
+</mapper>

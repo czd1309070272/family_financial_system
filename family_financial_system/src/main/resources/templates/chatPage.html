@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <title>H+ 后台主题UI框架 - 主页</title>
+
+  <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+  <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+  <!--[if lt IE 9]>
+  <meta http-equiv="refresh" content="0;ie.html" />
+  <![endif]-->
+
+  <link rel="shortcut icon" href="favicon.ico">
+  <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+  <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+  <link href="css/animate.min.css" rel="stylesheet">
+  <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+<body>
+昵称:<input type="text" id="nickname"/>
+<button onclick="conectWebSocket()">连接WebSocket</button>
+<button onclick="closeWebSocket()">断开连接</button>
+<div id="mainContent" class="small-chat-box fadeInRight animated active">
+
+  <div class="heading" draggable="true">
+    <small id="datetime" class="chat-date pull-right">
+      2015.9.1
+    </small> 与 Beau-zihan 聊天中
+  </div>
+
+  <div id="content" class="content">
+<!--    <span id="connectMsg" class="chat-message active"></span>-->
+
+<!--    <div id="left" class="left">-->
+<!--      <div class="author-name">-->
+<!--        Beau-zihan <small class="chat-date">-->
+<!--        10:02-->
+<!--      </small>-->
+<!--      </div>-->
+<!--      <div id="message-left" class="chat-message active">-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--    <div class="right">-->
+<!--      <div class="author-name">-->
+<!--        游客-->
+<!--        <small class="chat-date">-->
+<!--          11:24-->
+<!--        </small>-->
+<!--      </div>-->
+<!--      <div id="message-right" class="chat-message">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="left">-->
+<!--      <div class="author-name">-->
+<!--        Beau-zihan-->
+<!--        <small class="chat-date">-->
+<!--          08:45-->
+<!--        </small>-->
+<!--      </div>-->
+<!--      <div class="chat-message active">-->
+<!--        有，购买的H+源码包中有帮助文档，位于docs文件夹下-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+
+  </div>
+  <div class="form-chat">
+    <div class="input-group input-group-sm">
+      <input id="msgText" type="text" class="form-control"> <span class="input-group-btn"> <button
+            class="btn btn-primary" type="button" onclick="send()">发送
+                </button> </span>
+    </div>
+  </div>
+
+</div>
+<div id="small-chat">
+  <span class="badge badge-warning pull-right">5</span>
+  <a class="open-small-chat">
+    <i class="fa fa-comments"></i>
+
+  </a>
+</div>
+
+<script type="text/javascript">
+  function createMsg(flag,msg){
+    var str="";
+    var a=document.getElementById("content");
+    if(flag==1){
+      str+='<div id="left" class="left">'
+      str+=    '<div id="message-left" class="chat-message active">'
+      str+=        ''+msg+''
+      str+=    '</div>'
+      str+='</div>'
+      a.innerHTML+=str;
+    }else{
+      str+='<div id="right" class="right">'
+      str+=    '<div id="message-right" class="chat-message">'
+      str+=        ''+msg+''
+      str+=    '</div>'
+      str+='</div>'
+      a.innerHTML+=str;
+    }
+    $("#msgText").val("");
+
+
+  }
+
+
+    var websocket = null;
+  function conectWebSocket(){
+    var nickname = document.getElementById("nickname").value;
+    if(nickname===""){
+      alert("请输入昵称");
+      return;
+    }
+    //判断当前浏览器是否支持WebSocket
+    if ('WebSocket'in window) {
+      websocket = new WebSocket("ws://localhost:8080/websocket/"+nickname);
+    } else {
+      alert('Not support websocket')
+    }
+    //连接发生错误的回调方法
+    websocket.onerror = function() {
+      setMessageInnerHTML("error");
+    };
+    //连接成功建立的回调方法
+    websocket.onopen = function(event) {
+      setConnectMessageInHTML("成功建立连接");
+      // setMessageInnerHTML("Loc MSG: 成功建立连接");
+    }
+    //接收到消息的回调方法
+    websocket.onmessage = function(event) {
+      // setConnectMessageInHTML(event.data);
+      setMessageInnerHTML(event.data);
+    }
+    //连接关闭的回调方法
+    websocket.onclose = function() {
+      setConnectMessageInHTML("关闭连接");
+      // setMessageInnerHTML("Loc MSG:关闭连接");
+    }
+    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function() {
+      websocket.close();
+    }
+  }
+  function setConnectMessageInHTML(innerHTML){
+      $("#connectMsg").html(innerHTML);
+  }
+  //将消息显示在网页上
+  function setMessageInnerHTML(innerHTML) {
+    createMsg(innerHTML.substring(1,2),innerHTML.substring(3,innerHTML.length));
+  }
+  //关闭连接
+  function closeWebSocket() {
+    websocket.close();
+  }
+  //发送消息
+  function send() {
+    var message = document.getElementById('msgText').value;
+    if(message!=""){
+      websocket.send(message);
+    }
+
+  }
+</script>
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<!--<script src="js/hplus.min.js?v=4.1.0"></script>-->
+<script type="text/javascript" src="js/contabs.min.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+<script>
+  $(function (){
+    var dateT=new Date();
+    $("#datetime").html(dateT.getFullYear()+"."+(parseInt(dateT.getMonth())+1).toString()+"."+dateT.getDate());
+  })
+  $(function(){
+    $(".small-chat-box .content").slimScroll({
+      height:"234px",
+      width:"350px",
+      size:"5px",
+      railOpacity:.4,
+      wheelStep: 10,
+      start:"bottom"
+    });
+  });
+
+</script>
+</body>
+</html>

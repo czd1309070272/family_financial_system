@@ -1,0 +1,4 @@
+[{"houseid":1,"money":4.00,"name":"餐饮美食","payway":"支付宝","remark":"","id":1,"time":"2022-09-07 09:27:58","title":"饮料","realname":"小明"},
+  {"houseid":1,"money":12.00,"name":"餐饮美食","payway":"微信支付","id":2,"time":"2022-09-07 09:28:01","title":"汉堡","realname":"小明"},
+  {"houseid":1,"money":6799.00,"name":"数码电器","payway":"支付宝","id":3,"time":"2022-08-11 09:55:09","title":"iphone14","realname":"小明"},
+  {"houseid":1,"money":67.50,"name":"服饰装扮","payway":"微信支付","id":4,"time":"2022-09-07 10:21:30","title":"衣服","realname":"小曾"}]

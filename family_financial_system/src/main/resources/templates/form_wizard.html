@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:28 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 表单向导</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/plugins/switchery/switchery.css" rel="stylesheet">
+<!--    <link href="css/plugins/chosen/chosen.css" rel="stylesheet">-->
+<!--    <link href="css/plugins/colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">-->
+<!--    <link href="css/plugins/cropper/cropper.min.css" rel="stylesheet">-->
+<!--    <link href="css/plugins/switchery/switchery.css" rel="stylesheet">-->
+    <link href="css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+<!--    <link href="css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">-->
+<!--    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">-->
+    <link href="css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+<!--    <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">-->
+<!--    <link href="css/plugins/clockpicker/clockpicker.css" rel="stylesheet">-->
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>财务管理系统初始化</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_wizard.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="form_wizard.html#">选项1</a>
+                                </li>
+                                <li><a href="form_wizard.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <h2>
+                                系统初始化
+                            </h2>
+                        <p>
+                            请输入初始化相关的信息
+                        </p>
+
+                        <form id="form" action="/index" class="wizard-big">
+                            <h1>收入</h1>
+                            <fieldset>
+                                <h2>收入信息</h2>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <label>是否固定的收入无太大变动</label>
+                                            <input type="checkbox" onchange="getButtonEvent()" class="js-switch js-check-click" checked/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="bestIncom">家庭全年总收入￥ *</label>
+                                            <input id="income" name="income" type="text" class="form-control required">
+                                        </div>
+                                        <div id="lowerIncomPanel" class="form-group" style="display: none">
+                                            <label>最低收入￥ *</label>
+                                            <input id="income_1" name="income_1" type="text" class="form-control required" >
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <h1>预期支出信息</h1>
+                            <fieldset>
+                                <h2>预期支出</h2>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>预期年支出 *</label>
+                                            <input id="year_spending" name="year_spending" type="text" class="form-control required">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>预期月支出 *</label>
+                                            <input id="month_spending" name="month_spending" type="text" class="form-control required">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <h1>完成</h1>
+                            <fieldset>
+                                <h2>数据将会加密</h2>
+                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
+                                <label for="acceptTerms">我同意注册条款</label>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/switchery/switchery.js"></script>
+    <script src="js/plugins/staps/jquery.steps.min.js"></script>
+    <script src="js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="js/plugins/validate/messages_zh.min.js"></script>
+
+<!--    <script src="js/plugins/chosen/chosen.jquery.js"></script>-->
+<!--    <script src="js/plugins/jsKnob/jquery.knob.js"></script>-->
+    <script src="js/plugins/jasny/jasny-bootstrap.min.js"></script>
+<!--    <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>-->
+<!--    <script src="js/plugins/prettyfile/bootstrap-prettyfile.js"></script>-->
+<!--    <script src="js/plugins/nouslider/jquery.nouislider.min.js"></script>-->
+<!--    <script src="js/plugins/switchery/switchery.js"></script>-->
+    <script src="js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
+<!--    <script src="js/plugins/iCheck/icheck.min.js"></script>-->
+<!--    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>-->
+<!--    <script src="js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>-->
+<!--    <script src="js/plugins/clockpicker/clockpicker.js"></script>-->
+<!--    <script src="js/plugins/cropper/cropper.min.js"></script>-->
+<!--    <script src="js/demo/form-advanced-demo.min.js"></script>-->
+    <script src="js/button/buttontype.js"></script>
+    <script src="js/wizardType.js"></script>
+    <script>
+        $(document).ready(function(){$("#wizard").steps();$("#form").steps({bodyTag:"fieldset",onStepChanging:function(event,currentIndex,newIndex){if(currentIndex>newIndex){return true}if(newIndex===3&&Number($("#age").val())<18){return false}var form=$(this);if(currentIndex<newIndex){$(".body:eq("+newIndex+") label.error",form).remove();$(".body:eq("+newIndex+") .error",form).removeClass("error")}form.validate().settings.ignore=":disabled,:hidden";return form.valid()},onStepChanged:function(event,currentIndex,priorIndex){if(currentIndex===2&&Number($("#age").val())>=18){$(this).steps("next")}if(currentIndex===2&&priorIndex===3){$(this).steps("previous")}},onFinishing:function(event,currentIndex){var form=$(this);form.validate().settings.ignore=":disabled";return form.valid()},onFinished:function(event,currentIndex){var form=$(this);form.submit()}}).validate({errorPlacement:function(error,element){element.before(error)},rules:{confirm:{equalTo:"#password"}}})});
+    </script>
+<!--    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:29 GMT -->
+</html>
